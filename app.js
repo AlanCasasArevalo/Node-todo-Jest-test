@@ -8,6 +8,13 @@ mongoDB.connect()
 app.use(express.json())
 app.use('/', todoRoutes)
 
+app.use((error, req, res, next) => {
+    console.error('error desde createTodo', error)
+    res.status(500).json({
+        message: error.message
+    })
+})
+
 app.get('/', (req, res) => {
     res.json('Holllaaaaaaa')
 })

@@ -9,7 +9,7 @@ let req, res, next
 beforeEach(() => {
     req = httpsMocks.createRequest()
     res = httpsMocks.createResponse()
-    next = null
+    next = jest.fn()
 })
 
 describe('TodoController', () => {
@@ -41,6 +41,16 @@ describe('TodoController', () => {
         TodoModel.create.mockReturnValue(newTodo)
         await todoController.createTodo(req, res, next)
         expect(res._getJSONData()).toStrictEqual(newTodo)
+    });
+
+    it('Should handle errors', async function () {
+        const errorMessage = {
+            message: 'Some properties required was not sent'
+        }
+        const rejectedPromise = Promise.reject(errorMessage)
+        TodoModel.create.mockReturnValue(rejectedPromise)
+        await todoController.createTodo(req, res, next)
+        expect(next).toBeCalledWith(errorMessage)
     });
 })
 
