@@ -27,6 +27,7 @@ describe('', () => {
         })
 
         it('Should return response with status 200 and all todos', async () => {
+            TodoModel.find.mockReturnValue(allTodos)
             await todoController.getTodos(req, res, next)
             expect(res.statusCode).toBe(200)
             expect(res._isEndCalled()).toBeTruthy()
