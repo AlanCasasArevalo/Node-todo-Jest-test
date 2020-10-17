@@ -5,5 +5,8 @@ const todoController = require('../controllers/todo.controller')
 router
     .post('/todos',
         todoController.createTodo)
+    .get('/todos',
+        todoController.getTodos
+    )
 
 module.exports = router
