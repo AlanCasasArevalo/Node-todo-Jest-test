@@ -2,8 +2,8 @@ const TodoModel = require("../model/todo.model");
 
 const createTodo = (req, res, next) => {
     const body = req.body
-    TodoModel.create(body)
-    res.status(201).send()
+    const createModel = TodoModel.create(body)
+    res.status(201).json(createModel)
 }
 
 module.exports = {
