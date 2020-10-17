@@ -2,6 +2,7 @@ const todoController = require('../../controllers/todo.controller')
 const TodoModel = require('../../model/todo.model')
 const httpsMocks = require('node-mocks-http')
 const newTodo = require('../mock-data/new-todo.json.json')
+const allTodos = require('../mock-data/all-todos.json')
 
 TodoModel.create = jest.fn()
 TodoModel.find = jest.fn()
@@ -19,9 +20,17 @@ describe('', () => {
         it('Should have a getTodos function', () => {
             expect(typeof todoController.getTodos).toBe('function')
         })
+
         it('Should call TodoModel.find({})', async () => {
             await todoController.getTodos(req, res, next)
             expect(TodoModel.find).toHaveBeenCalledWith({})
+        })
+
+        it('Should return response with status 200 and all todos', async () => {
+            await todoController.getTodos(req, res, next)
+            expect(res.statusCode).toBe(200)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual(allTodos)
         })
     })
 
