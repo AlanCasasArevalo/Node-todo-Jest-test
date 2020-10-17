@@ -26,6 +26,12 @@ describe('TodoController', () => {
         todoController.createTodo(req, res, next)
         expect(TodoModel.create).toBeCalledWith(newTodo)
     });
+
+    it('Should return 201 response code with everything it is ok', function () {
+        req.body = newTodo
+        todoController.createTodo(req, res, next)
+        expect(res.statusCode).toBe(201)
+    });
 })
 
 
