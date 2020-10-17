@@ -13,6 +13,11 @@ beforeEach(() => {
 })
 
 describe('TodoController', () => {
+
+    beforeEach(() => {
+        req.body = newTodo
+    })
+
     it('It todoController should be defined', () => {
         expect(todoController).toBeDefined()
     })
@@ -22,16 +27,20 @@ describe('TodoController', () => {
     })
 
     it('Todo controller should received req, res and next', function () {
-        req.body = newTodo
         todoController.createTodo(req, res, next)
         expect(TodoModel.create).toBeCalledWith(newTodo)
     });
 
-    it('Should return 201 response code with everything it is ok', function () {
-        req.body = newTodo
+    it('Should return 201 response code when everything it is ok', function () {
         todoController.createTodo(req, res, next)
         expect(res.statusCode).toBe(201)
         expect(res._isEndCalled()).toBeTruthy()
+    });
+
+    it('Should return JSON body in response when everything it is ok', function () {
+        TodoModel.create.mockReturnValue(newTodo)
+        todoController.createTodo(req, res, next)
+        expect(res._getJSONData()).toBe(newTodo)
     });
 })
 
