@@ -33,6 +33,16 @@ describe('', () => {
             expect(res._isEndCalled()).toBeTruthy()
             expect(res._getJSONData()).toStrictEqual(allTodos)
         })
+
+        it('Should handle errors', async function () {
+            const errorMessage = {
+                message: 'Error Finding'
+            }
+            const rejectedPromise = Promise.reject(errorMessage)
+            TodoModel.find.mockReturnValue(rejectedPromise)
+            await todoController.getTodos(req, res, next)
+            expect(next).toHaveBeenCalledWith(errorMessage)
+        });
     })
 
     describe('TodoController POST Todo', () => {
@@ -73,7 +83,7 @@ describe('', () => {
             const rejectedPromise = Promise.reject(errorMessage)
             TodoModel.create.mockReturnValue(rejectedPromise)
             await todoController.createTodo(req, res, next)
-            expect(next).toBeCalledWith(errorMessage)
+            expect(next).toHaveBeenCalledWith(errorMessage)
         });
     })
 })
