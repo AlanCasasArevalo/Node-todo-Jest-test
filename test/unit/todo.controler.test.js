@@ -31,6 +31,7 @@ describe('TodoController', () => {
         req.body = newTodo
         todoController.createTodo(req, res, next)
         expect(res.statusCode).toBe(201)
+        expect(res._isEndCalled()).toBeTruthy()
     });
 })
 
