@@ -31,15 +31,15 @@ describe('TodoController', () => {
         expect(TodoModel.create).toBeCalledWith(newTodo)
     });
 
-    it('Should return 201 response code when everything it is ok', function () {
-        todoController.createTodo(req, res, next)
+    it('Should return 201 response code when everything it is ok', async function () {
+        await todoController.createTodo(req, res, next)
         expect(res.statusCode).toBe(201)
         expect(res._isEndCalled()).toBeTruthy()
     });
 
-    it('Should return JSON body in response when everything it is ok', function () {
+    it('Should return JSON body in response when everything it is ok', async function () {
         TodoModel.create.mockReturnValue(newTodo)
-        todoController.createTodo(req, res, next)
+        await todoController.createTodo(req, res, next)
         expect(res._getJSONData()).toStrictEqual(newTodo)
     });
 })
