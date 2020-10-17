@@ -21,5 +21,8 @@ describe(endpointUrl, () => {
                 title: "Make first unit test",
             })
         expect(response.statusCode).toBe(500)
+        expect(response.body).toStrictEqual({
+            message: 'Todo validation failed: some parameter is required'
+        })
     })
 })
