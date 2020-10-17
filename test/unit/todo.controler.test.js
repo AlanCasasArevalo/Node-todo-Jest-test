@@ -40,7 +40,7 @@ describe('TodoController', () => {
     it('Should return JSON body in response when everything it is ok', function () {
         TodoModel.create.mockReturnValue(newTodo)
         todoController.createTodo(req, res, next)
-        expect(res._getJSONData()).toBe(newTodo)
+        expect(res._getJSONData()).toStrictEqual(newTodo)
     });
 })
 
