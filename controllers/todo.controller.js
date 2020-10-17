@@ -10,6 +10,10 @@ const createTodo = async (req, res, next) => {
     }
 }
 
+const getTodos = async (req, res, next) => {
+}
+
 module.exports = {
-    createTodo
+    createTodo,
+    getTodos
 }
