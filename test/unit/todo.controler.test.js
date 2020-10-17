@@ -4,6 +4,8 @@ const httpsMocks = require('node-mocks-http')
 const newTodo = require('../mock-data/new-todo.json.json')
 
 TodoModel.create = jest.fn()
+TodoModel.find = jest.fn()
+
 let req, res, next
 
 beforeEach(() => {
@@ -16,8 +18,10 @@ describe('', () => {
     describe('TodoController GET Todo', () => {
         it('Should have a getTodos function', () => {
             expect(typeof todoController.getTodos).toBe('function')
-
-
+        })
+        it('Should call TodoModel.find({})', async () => {
+            await todoController.getTodos(req, res, next)
+            expect(TodoModel.find).toHaveBeenCalledWith({})
         })
     })
 
