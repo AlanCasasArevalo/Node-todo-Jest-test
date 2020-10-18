@@ -20,9 +20,13 @@ const getTodos = async (req, res, next) => {
 }
 
 const getTodoById = async (req, res, next) => {
-    const id = req.params.todoId
-    const todo = await TodoModel.findById(id)
-    res.status(200).json(todo)
+    try {
+        const id = req.params.todoId
+        const todo = await TodoModel.findById(id)
+        res.status(200).json(todo)
+    } catch (error) {
+        next(error)
+    }
 }
 
 module.exports = {
