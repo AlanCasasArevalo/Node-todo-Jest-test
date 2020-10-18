@@ -19,13 +19,18 @@ describe(endpointUrl, () => {
     })
 
     describe('GET TODO BY ID INTEGRATION', () => {
-        it(`GET ${endpointUrl}`, async () => {
+        it(`GET BY ID ${endpointUrl}`, async () => {
             const response = await request(app)
                 .get(endpointUrl + firsTodo._id)
             expect(response.statusCode).toBe(200)
             expect(response.body).toBeTruthy()
             expect(response.body.title).toEqual(firsTodo.title)
             expect(response.body.done).toEqual(firsTodo.done)
+        })
+        it(`GET BY ID ${endpointUrl} does not exist`, async () => {
+            const response = await request(app)
+                .get(endpointUrl + '/5a8aa67aa5695a197574aaa5')
+            expect(response.statusCode).toBe(404)
         })
     })
 
