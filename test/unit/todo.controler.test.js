@@ -16,6 +16,7 @@ beforeEach(() => {
 })
 
 describe('', () => {
+
     describe('TodoController GET Todo', () => {
         it('Should have a getTodos function', () => {
             expect(typeof todoController.getTodos).toBe('function')
@@ -43,6 +44,12 @@ describe('', () => {
             await todoController.getTodos(req, res, next)
             expect(next).toHaveBeenCalledWith(errorMessage)
         });
+    })
+
+    describe('TodoController GET BY ID Todo', () => {
+        it('Should have a getTodoById function', () => {
+            expect(typeof todoController.getTodoById).toBe('function')
+        })
     })
 
     describe('TodoController POST Todo', () => {
