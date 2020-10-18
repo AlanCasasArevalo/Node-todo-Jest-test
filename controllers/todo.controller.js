@@ -19,7 +19,11 @@ const getTodos = async (req, res, next) => {
     }
 }
 
+const getTodoById = async (req, res, next) => {
+}
+
 module.exports = {
     createTodo,
-    getTodos
+    getTodos,
+    getTodoById
 }
