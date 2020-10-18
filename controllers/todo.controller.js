@@ -21,7 +21,8 @@ const getTodos = async (req, res, next) => {
 
 const getTodoById = async (req, res, next) => {
     const id = req.params.todoId
-    TodoModel.findById(id)
+    const todo = await TodoModel.findById(id)
+    res.status(200).json(todo)
 }
 
 module.exports = {
