@@ -57,6 +57,15 @@ describe('', () => {
             await todoController.getTodoById(req, res, next)
             expect(TodoModel.findById).toHaveBeenCalledWith("5f8ad67be5695a197574deb5")
         })
+
+        it('Should return json body and response code 200', async () => {
+            TodoModel.findById.mockReturnValue(newTodo)
+            await todoController.getTodoById(req, res, next)
+            expect(res.statusCode).toBe(200)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual(newTodo)
+        })
+
     })
 
     describe('TodoController POST Todo', () => {
