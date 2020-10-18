@@ -23,7 +23,13 @@ const getTodoById = async (req, res, next) => {
     try {
         const id = req.params.todoId
         const todo = await TodoModel.findById(id)
-        res.status(200).json(todo)
+        if (todo && typeof todo !== 'undefined') {
+            res.status(200).json(todo)
+        } else {
+            res.status(404).json({
+                message: 'Resource was not found'
+            })
+        }
     } catch (error) {
         next(error)
     }
