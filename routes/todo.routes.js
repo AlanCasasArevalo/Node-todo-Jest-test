@@ -8,5 +8,8 @@ router
     .get('/todos',
         todoController.getTodos
     )
+    .get('/todos/:id',
+        todoController.getTodoById
+    )
 
 module.exports = router

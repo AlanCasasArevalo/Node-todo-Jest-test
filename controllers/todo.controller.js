@@ -21,7 +21,7 @@ const getTodos = async (req, res, next) => {
 
 const getTodoById = async (req, res, next) => {
     try {
-        const id = req.params.todoId
+        const id = req.params.id
         const todo = await TodoModel.findById(id)
         if (todo && typeof todo !== 'undefined') {
             res.status(200).json(todo)
