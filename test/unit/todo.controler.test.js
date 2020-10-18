@@ -6,6 +6,7 @@ const allTodos = require('../mock-data/all-todos.json')
 
 TodoModel.create = jest.fn()
 TodoModel.find = jest.fn()
+TodoModel.findById = jest.fn()
 
 let req, res, next
 
@@ -16,6 +17,7 @@ beforeEach(() => {
 })
 
 describe('', () => {
+
     describe('TodoController GET Todo', () => {
         it('Should have a getTodos function', () => {
             expect(typeof todoController.getTodos).toBe('function')
@@ -43,6 +45,46 @@ describe('', () => {
             await todoController.getTodos(req, res, next)
             expect(next).toHaveBeenCalledWith(errorMessage)
         });
+    })
+
+    describe('TodoController GET BY ID Todo', () => {
+        it('Should have a getTodoById function', () => {
+            expect(typeof todoController.getTodoById).toBe('function')
+        })
+
+        it('Should call TodoModel.find({id:}) with route parameters', async () => {
+            req.params.todoId = "5f8ad67be5695a197574deb5"
+            await todoController.getTodoById(req, res, next)
+            expect(TodoModel.findById).toHaveBeenCalledWith("5f8ad67be5695a197574deb5")
+        })
+
+        it('Should return json body and response code 200', async () => {
+            TodoModel.findById.mockReturnValue(newTodo)
+            await todoController.getTodoById(req, res, next)
+            expect(res.statusCode).toBe(200)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual(newTodo)
+        })
+
+        it('Should handle errors', async function () {
+            const errorMessage = {
+                message: 'Error Finding'
+            }
+            const rejectedPromise = Promise.reject(errorMessage)
+            TodoModel.findById.mockReturnValue(rejectedPromise)
+            await todoController.getTodoById(req, res, next)
+            expect(next).toHaveBeenCalledWith(errorMessage)
+        });
+
+        it('Should return 404 when item does not exist', async () => {
+            TodoModel.findById.mockReturnValue(null)
+            await todoController.getTodoById(req, res, next)
+            expect(res.statusCode).toBe(404)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual({
+                message: 'Resource was not found'
+            })
+        })
     })
 
     describe('TodoController POST Todo', () => {
