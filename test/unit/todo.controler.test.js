@@ -76,6 +76,12 @@ describe('', () => {
             expect(next).toHaveBeenCalledWith(errorMessage)
         });
 
+        it('Should return 404 when item does not exist', async () => {
+            TodoModel.findById.mockReturnValue(null)
+            await todoController.getTodoById(req, res, next)
+            expect(res.statusCode).toBe(404)
+            expect(res._isEndCalled()).toBeTruthy()
+        })
     })
 
     describe('TodoController POST Todo', () => {
