@@ -20,6 +20,8 @@ const getTodos = async (req, res, next) => {
 }
 
 const getTodoById = async (req, res, next) => {
+    const id = req.params.todoId
+    TodoModel.findById(id)
 }
 
 module.exports = {
