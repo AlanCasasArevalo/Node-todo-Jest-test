@@ -3,6 +3,8 @@ const app = require('../../app')
 const endpointUrl = '/todos/'
 const newTodo = require('../mock-data/new-todo.json.json')
 
+let firsTodo
+
 describe(endpointUrl, () => {
     describe('GET TODO INTEGRATION', () => {
         it(`GET ${endpointUrl}`, async () => {
@@ -12,6 +14,18 @@ describe(endpointUrl, () => {
             expect(Array.isArray(response.body)).toBeTruthy()
             expect(response.body[0].title).toBeDefined()
             expect(response.body[0].done).toBeDefined()
+            firsTodo = response.body[0]
+        })
+    })
+
+    describe('GET TODO BY ID INTEGRATION', () => {
+        it(`GET ${endpointUrl}`, async () => {
+            const response = await request(app)
+                .get(endpointUrl + firsTodo._id)
+            expect(response.statusCode).toBe(200)
+            expect(response.body).toBeTruthy()
+            expect(response.body.title).toEqual(firsTodo.title)
+            expect(response.body.done).toEqual(firsTodo.done)
         })
     })
 
