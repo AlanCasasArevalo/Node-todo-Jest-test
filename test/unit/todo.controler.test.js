@@ -81,6 +81,9 @@ describe('', () => {
             await todoController.getTodoById(req, res, next)
             expect(res.statusCode).toBe(404)
             expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual({
+                message: 'Resource was not found'
+            })
         })
     })
 
