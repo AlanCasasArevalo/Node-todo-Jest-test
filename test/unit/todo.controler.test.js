@@ -199,7 +199,16 @@ describe('', () => {
             expect(res.statusCode).toBe(204)
         })
 
-    })
+        it('Should handle errors', async function () {
+            const errorMessage = {
+                message: 'Resource was not found'
+            }
+            const rejectedPromise = Promise.reject(errorMessage)
+            TodoModel.findByIdAndDelete.mockReturnValue(rejectedPromise)
+            await todoController.deleteTodo(req, res, next)
+            expect(next).toHaveBeenCalledWith(errorMessage)
+        })
+
 })
 
 
