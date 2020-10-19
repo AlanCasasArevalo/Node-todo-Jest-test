@@ -35,8 +35,12 @@ const getTodoById = async (req, res, next) => {
     }
 }
 
+const updateTodo = async (req, res, next) => {
+}
+
 module.exports = {
     createTodo,
     getTodos,
-    getTodoById
+    getTodoById,
+    updateTodo
 }
