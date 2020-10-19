@@ -128,6 +128,12 @@ describe('', () => {
             expect(next).toHaveBeenCalledWith(errorMessage)
         });
     })
+    describe('TodoController PUT Todo', () => {
+        it('It should have a updateTodo Function', () => {
+            expect(typeof todoController.updateTodo).toBe('function')
+        })
+
+    })
 })
 
 
