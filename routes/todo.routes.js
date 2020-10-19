@@ -11,5 +11,8 @@ router
     .get('/todos/:id',
         todoController.getTodoById
     )
+    .put('/todos/:id',
+        todoController.updateTodo
+    )
 
 module.exports = router
