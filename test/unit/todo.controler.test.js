@@ -157,6 +157,15 @@ describe('', () => {
             expect(res._getJSONData()).toStrictEqual(newTodo)
         })
 
+        it('Should handle errors', async function () {
+            const errorMessage = {
+                message: 'Resource was not found'
+            }
+            const rejectedPromise = Promise.reject(errorMessage)
+            TodoModel.findByIdAndUpdate.mockReturnValue(rejectedPromise)
+            await todoController.updateTodo(req, res, next)
+            expect(next).toHaveBeenCalledWith(errorMessage)
+        })
     })
 })
 
