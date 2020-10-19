@@ -7,6 +7,8 @@ const allTodos = require('../mock-data/all-todos.json')
 TodoModel.create = jest.fn()
 TodoModel.find = jest.fn()
 TodoModel.findById = jest.fn()
+TodoModel.findByIdAndUpdate = jest.fn()
+
 const todoId = "5f8ad67be5695a197574deb5"
 let req, res, next
 
@@ -134,7 +136,6 @@ describe('', () => {
             expect(typeof todoController.updateTodo).toBe('function')
         })
 
-
         it('Should call TodoModel.findByIdAndUpdate', async () => {
             req.params.id = todoId
             req.body = newTodo
@@ -145,6 +146,36 @@ describe('', () => {
             })
         })
 
+        it('Should return a response with json data and 200', async () => {
+            req.params.id = todoId
+            req.body = newTodo
+
+            TodoModel.findByIdAndUpdate.mockReturnValue(newTodo)
+            await todoController.updateTodo(req, res, next)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res.statusCode).toBe(200)
+            expect(res._getJSONData()).toStrictEqual(newTodo)
+        })
+
+        it('Should handle errors', async function () {
+            const errorMessage = {
+                message: 'Resource was not found'
+            }
+            const rejectedPromise = Promise.reject(errorMessage)
+            TodoModel.findByIdAndUpdate.mockReturnValue(rejectedPromise)
+            await todoController.updateTodo(req, res, next)
+            expect(next).toHaveBeenCalledWith(errorMessage)
+        })
+
+        it('Should return 404 when item does not exist', async () => {
+            TodoModel.findByIdAndUpdate.mockReturnValue(null)
+            await todoController.updateTodo(req, res, next)
+            expect(res.statusCode).toBe(404)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual({
+                message: 'Resource was not found'
+            })
+        })
     })
 })
 

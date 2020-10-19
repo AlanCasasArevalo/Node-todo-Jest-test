@@ -36,6 +36,24 @@ const getTodoById = async (req, res, next) => {
 }
 
 const updateTodo = async (req, res, next) => {
+
+    try {
+        const id = req.params.id
+        const updateTodo = await TodoModel.findByIdAndUpdate(id, req.body, {
+            new: true,
+            useFindAndModify: false
+        })
+
+        if (updateTodo && typeof updateTodo !== 'undefined') {
+            res.status(200).json(updateTodo)
+        } else {
+            res.status(404).json({
+                message: 'Resource was not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
 }
 
 module.exports = {
