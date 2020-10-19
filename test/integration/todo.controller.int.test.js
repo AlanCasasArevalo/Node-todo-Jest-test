@@ -89,5 +89,11 @@ describe(endpointUrl, () => {
                 .send()
             expect(response.statusCode).toBe(204)
         })
+        it(`DELETE ${endpointUrl} does not exist 404`, async () => {
+            const response = await request(app)
+                .delete(endpointUrl + '/5a8aa67aa5695a197574aaa5')
+            expect(response.statusCode).toBe(404)
+        })
+
     })
 })
