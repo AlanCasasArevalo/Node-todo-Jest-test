@@ -60,6 +60,7 @@ const deleteTodo = async (req, res, next) => {
         const id = req.params.id
 
         const deleteTodo = await TodoModel.findByIdAndDelete(id)
+            res.status(204).json()
 }
 
 module.exports = {
