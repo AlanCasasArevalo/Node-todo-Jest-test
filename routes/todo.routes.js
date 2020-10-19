@@ -14,5 +14,8 @@ router
     .put('/todos/:id',
         todoController.updateTodo
     )
+    .delete('/todos/:id',
+        todoController.deleteTodo
+    )
 
 module.exports = router
