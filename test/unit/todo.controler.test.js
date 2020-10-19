@@ -7,6 +7,8 @@ const allTodos = require('../mock-data/all-todos.json')
 TodoModel.create = jest.fn()
 TodoModel.find = jest.fn()
 TodoModel.findById = jest.fn()
+TodoModel.findByIdAndUpdate = jest.fn()
+
 const todoId = "5f8ad67be5695a197574deb5"
 let req, res, next
 
