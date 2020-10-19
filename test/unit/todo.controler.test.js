@@ -166,6 +166,16 @@ describe('', () => {
             await todoController.updateTodo(req, res, next)
             expect(next).toHaveBeenCalledWith(errorMessage)
         })
+
+        it('Should return 404 when item does not exist', async () => {
+            TodoModel.findByIdAndUpdate.mockReturnValue(null)
+            await todoController.updateTodo(req, res, next)
+            expect(res.statusCode).toBe(404)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res._getJSONData()).toStrictEqual({
+                message: 'Resource was not found'
+            })
+        })
     })
 })
 
