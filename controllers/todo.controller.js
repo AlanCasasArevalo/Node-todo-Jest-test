@@ -56,9 +56,28 @@ const updateTodo = async (req, res, next) => {
     }
 }
 
+const deleteTodo = async (req, res, next) => {
+    try {
+        const id = req.params.id
+
+        const deleteTodo = await TodoModel.findByIdAndDelete(id)
+
+        if (deleteTodo && typeof deleteTodo !== 'undefined') {
+            res.status(204).json()
+        } else {
+            res.status(404).json({
+                message: 'Resource was not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     createTodo,
     getTodos,
     getTodoById,
-    updateTodo
+    updateTodo,
+    deleteTodo
 }
