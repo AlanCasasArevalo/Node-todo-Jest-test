@@ -82,4 +82,12 @@ describe(endpointUrl, () => {
 
     })
 
+    describe('DELETE TODO INTEGRATION', () => {
+        it(`DELETE ${endpointUrl}`, async () => {
+            const response = await request(app)
+                .delete(endpointUrl + newTodoId)
+                .send()
+            expect(response.statusCode).toBe(204)
+        })
+    })
 })
