@@ -190,6 +190,15 @@ describe('', () => {
             expect(TodoModel.findByIdAndDelete).toHaveBeenCalledWith(todoId)
         })
 
+        it('Should return a response with json data and 204', async () => {
+            req.params.id = todoId
+
+            TodoModel.findByIdAndDelete.mockReturnValue(newTodo)
+            await todoController.deleteTodo(req, res, next)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res.statusCode).toBe(204)
+        })
+
     })
 })
 
