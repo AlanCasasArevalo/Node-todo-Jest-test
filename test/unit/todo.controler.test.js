@@ -8,6 +8,7 @@ TodoModel.create = jest.fn()
 TodoModel.find = jest.fn()
 TodoModel.findById = jest.fn()
 TodoModel.findByIdAndUpdate = jest.fn()
+TodoModel.findByIdAndDelete = jest.fn()
 
 const todoId = "5f8ad67be5695a197574deb5"
 let req, res, next
@@ -176,6 +177,13 @@ describe('', () => {
                 message: 'Resource was not found'
             })
         })
+    })
+
+    describe('TodoController DELETE Todo', () => {
+        it('It should have a deleteTodo Function', () => {
+            expect(typeof todoController.deleteTodo).toBe('function')
+        })
+
     })
 })
 
