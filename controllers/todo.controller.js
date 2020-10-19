@@ -57,6 +57,9 @@ const updateTodo = async (req, res, next) => {
 }
 
 const deleteTodo = async (req, res, next) => {
+        const id = req.params.id
+
+        const deleteTodo = await TodoModel.findByIdAndDelete(id)
 }
 
 module.exports = {
