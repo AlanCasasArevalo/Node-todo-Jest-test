@@ -74,5 +74,12 @@ describe(endpointUrl, () => {
             expect(response.body.done).toBe(todoTest.done)
         })
 
+        it(`PUT ${endpointUrl} does not exist 404`, async () => {
+            const response = await request(app)
+                .put(endpointUrl + '/5a8aa67aa5695a197574aaa5')
+            expect(response.statusCode).toBe(404)
+        })
+
     })
+
 })
