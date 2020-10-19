@@ -44,7 +44,13 @@ const updateTodo = async (req, res, next) => {
             useFindAndModify: false
         })
 
-        res.status(200).json(updateTodo)
+        if (updateTodo && typeof updateTodo !== 'undefined') {
+            res.status(200).json(updateTodo)
+        } else {
+            res.status(404).json({
+                message: 'Resource was not found'
+            })
+        }
     } catch (error) {
         next(error)
     }
