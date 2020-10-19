@@ -56,9 +56,13 @@ const updateTodo = async (req, res, next) => {
     }
 }
 
+const deleteTodo = async (req, res, next) => {
+}
+
 module.exports = {
     createTodo,
     getTodos,
     getTodoById,
-    updateTodo
+    updateTodo,
+    deleteTodo
 }
