@@ -61,7 +61,14 @@ const deleteTodo = async (req, res, next) => {
         const id = req.params.id
 
         const deleteTodo = await TodoModel.findByIdAndDelete(id)
+
+        if (deleteTodo && typeof deleteTodo !== 'undefined') {
             res.status(204).json()
+        } else {
+            res.status(404).json({
+                message: 'Resource was not found'
+            })
+        }
     } catch (error) {
         next(error)
     }
