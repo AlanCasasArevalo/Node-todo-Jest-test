@@ -136,7 +136,6 @@ describe('', () => {
             expect(typeof todoController.updateTodo).toBe('function')
         })
 
-
         it('Should call TodoModel.findByIdAndUpdate', async () => {
             req.params.id = todoId
             req.body = newTodo
@@ -145,6 +144,17 @@ describe('', () => {
                 new: true,
                 useFindAndModify: false
             })
+        })
+
+        it('Should return a response with json data and 200', async () => {
+            req.params.id = todoId
+            req.body = newTodo
+
+            TodoModel.findByIdAndUpdate.mockReturnValue(newTodo)
+            await todoController.updateTodo(req, res, next)
+            expect(res._isEndCalled()).toBeTruthy()
+            expect(res.statusCode).toBe(200)
+            expect(res._getJSONData()).toStrictEqual(newTodo)
         })
 
     })
